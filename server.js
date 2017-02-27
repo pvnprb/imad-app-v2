@@ -5,27 +5,35 @@ var path = require('path');
 var app = express();
 app.use(morgan('combined'));
 
-var articleOne={
-    title:'Article One | Pavan',
-    heading:'Article One',
-    date:'Sept 5,2017',
-    content:`<p>
-                    
-                    This the real content ! This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !
-                </p>
-                <p>
-                    
-                    This the real content ! This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !
-                </p>
-                <p>
-                    
-                    This the real content ! This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !
-                </p>
-                <p>
-                    
-                    This the real content ! This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !
-                </p>`
-};
+var articles ={ 
+    'article-one':{
+        title:'Article One | Pavan',
+        heading:'Article One',
+        date:'Sept 5,2017',
+        content:`<p>
+                        
+                        This the real content ! This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !
+                    </p>`
+    },
+    'article-two':{
+        title:'Article Two | Pavan',
+        heading:'Article Two',
+        date:'Sept 15,2017',
+        content:`<p>
+                        
+                        This the real content ! This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !
+                    </p>`
+    },
+    'article-three':{
+        title:'Article Three | Pavan',
+        heading:'Article Three',
+        date:'Sept 25,2017',
+        content:`<p>
+                        
+                        This the real content ! This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !This the real content !
+                    </p>`
+    }
+}
 
 
 function createTemplate(data)
@@ -66,16 +74,9 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
-app.get('/article-one',function(req,res){
-   res.send(createTemplate(articleOne));
-});
-
-app.get('/article-two',function(req,res){
-   res.sendFile(path.join(__dirname, 'ui', 'article-two.html'));  
-});
-
-app.get('/article-three',function(req,res){
-   res.sendFile(path.join(__dirname, 'ui', 'article-three.html'));  
+app.get('/:articleName',function(req,res){
+   var  articleName=req.params.articleName;
+   res.send(createTemplate(articles[articleName]));
 });
 
 app.get('/ui/style.css', function (req, res) {
